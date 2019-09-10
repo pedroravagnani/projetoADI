@@ -14,6 +14,8 @@ public class UserRepository {
 
 	public UserRepository() {
 		
+		System.out.println("na classe user repository");
+		
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("app");
 		EntityManager manager = factory.createEntityManager();
 		String email = "fulano@ifsp.edu.br";
