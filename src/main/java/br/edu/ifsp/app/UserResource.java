@@ -57,7 +57,7 @@ public class UserResource {
 	public String deleteUser(@PathParam("id") int id) {
 		User user = userRepository.getUser(id);
 		
-		if (userRepository.delete(user)) {
+		if (userRepository.delete(id)) {
 			return "User " + user.getName() + " deleted.";
 		} else {
 			return "User not found.";		

@@ -77,20 +77,19 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.17</version>
 		</dependency>
-		
-		<!-- HIBERNATE -->
+
+		<!--  Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.6.Final</version>
+			<version>5.4.1.Final</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.2.6.Final</version>
+			<version>5.4.1.Final</version>
 		</dependency>
-
 	</dependencies>
 
 	<properties>
