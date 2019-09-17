@@ -30,6 +30,8 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/all")
 	public List<User> getUsers() {
+		System.out.println("no user/resource/all");
+		
 		List<User> users = userRepository.getUsers();
 		return users;
 	}
