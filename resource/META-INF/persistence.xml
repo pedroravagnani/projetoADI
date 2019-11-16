@@ -6,7 +6,7 @@
     <persistence-unit name="library">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <!-- Aqui são listadas todas as entidades a serem persistidas -->
-        <class>br.edu.ifsp.app.User</class>
+        <class>br.edu.ifsp.app.user.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>     
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />

@@ -1,4 +1,4 @@
-package br.edu.ifsp.app;
+package br.edu.ifsp.app.user;
 
 import java.sql.*;
 import java.util.ArrayList;

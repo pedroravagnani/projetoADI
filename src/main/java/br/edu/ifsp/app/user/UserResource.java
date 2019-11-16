@@ -1,4 +1,4 @@
-package br.edu.ifsp.app;
+package br.edu.ifsp.app.user;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,14 +17,6 @@ import javax.ws.rs.core.MediaType;
 public class UserResource {
 
 	UserRepository userRepository = new UserRepository();
-		
-	@GET
-	@Path("user/{id}")
-	@Produces(MediaType.APPLICATION_XML)
-	public User getUser(@PathParam("id") int id) {
-		User user = userRepository.getUser(id);
-		return user;
-	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -38,7 +30,8 @@ public class UserResource {
 	
 	@POST
 	@Path("/user")
-	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public User createUser(User user) {
 		User createdUser = userRepository.create(user);
 		return createdUser;
@@ -46,7 +39,8 @@ public class UserResource {
 	
 	@PUT
 	@Path("/user")
-	@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public User updateUser(User user) {
 		User updateUser = userRepository.update(user);
 		return updateUser;
@@ -54,6 +48,7 @@ public class UserResource {
 	
 	@DELETE
 	@Path("/user/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String deleteUser(@PathParam("id") int id) {
 		User user = userRepository.getUser(id);
 		
