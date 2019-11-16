@@ -28,6 +28,14 @@
 
 	<dependencyManagement>
 		<dependencies>
+					<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat -->
+			<dependency>
+			    <groupId>org.apache.tomcat</groupId>
+			    <artifactId>tomcat</artifactId>
+			    <version>9.0.0.M1</version>
+			    <type>pom</type>
+			</dependency>
+		
 			<dependency>
 				<groupId>org.glassfish.jersey</groupId>
 				<artifactId>jersey-bom</artifactId>

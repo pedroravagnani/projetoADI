@@ -31,7 +31,7 @@ public class UserResource {
 	@Path("/all")
 	public List<User> getUsers() {
 		System.out.println("no user/resource/all");
-		
+
 		List<User> users = userRepository.getUsers();
 		return users;
 	}

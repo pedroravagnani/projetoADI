@@ -17,11 +17,12 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name="id")
+	@Column(name="id_user")
 	@Id
 	private long id;
 	private String name;
 	private String email;
+	private String password;
 	
 	public User() {}
 	
@@ -47,5 +48,13 @@ public class User implements Serializable {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 }

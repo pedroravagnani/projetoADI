@@ -24,7 +24,7 @@ public class UserRepository {
 	EntityManagerFactory factory = null;
 
 	public UserRepository() {
-		factory = Persistence.createEntityManagerFactory("app");
+		factory = Persistence.createEntityManagerFactory("library");
 		manager = factory.createEntityManager();
 	}
 
