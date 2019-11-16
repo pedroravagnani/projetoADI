@@ -7,8 +7,9 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <!-- Aqui são listadas todas as entidades a serem persistidas -->
         <class>br.edu.ifsp.app.user.User</class>
+        <class>br.edu.ifsp.app.book.Book</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>     
+        <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/library"/>
             <property name="javax.persistence.jdbc.user" value="root" />

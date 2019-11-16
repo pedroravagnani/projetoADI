@@ -1,5 +1,4 @@
 ##Create User
-
 CREATE TABLE `user` (
 	`id_user` INT(11) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(150) NOT NULL DEFAULT '0',
@@ -7,6 +6,20 @@ CREATE TABLE `user` (
 	`email` VARCHAR(50) NOT NULL DEFAULT '0',
 	`password` VARCHAR(255) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id_user`)
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
+
+## Create Books
+CREATE TABLE `book` (
+	`id_book` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100) NULL DEFAULT NULL,
+	`publisher` VARCHAR(100) NULL DEFAULT NULL,
+	`category` VARCHAR(50) NULL DEFAULT NULL,
+	`stock` INT(11) NULL DEFAULT '0',
+	`price` FLOAT(10,2) UNSIGNED NULL DEFAULT NULL,
+	PRIMARY KEY (`id_book`)
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
