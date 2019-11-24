@@ -8,6 +8,7 @@
         <!-- Aqui são listadas todas as entidades a serem persistidas -->
         <class>br.edu.ifsp.app.user.User</class>
         <class>br.edu.ifsp.app.book.Book</class>
+        <class>br.edu.ifsp.app.order.Order</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />

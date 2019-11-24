@@ -5,9 +5,8 @@ CREATE TABLE `user` (
 	`username` VARCHAR(50) NOT NULL DEFAULT '0',
 	`email` VARCHAR(50) NOT NULL DEFAULT '0',
 	`password` VARCHAR(255) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id_user`)
+	PRIMARY KEY (`id`)
 )
-COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 ;
 
@@ -19,8 +18,7 @@ CREATE TABLE `book` (
 	`category` VARCHAR(50) NULL DEFAULT NULL,
 	`stock` INT(11) NULL DEFAULT '0',
 	`price` FLOAT(10,2) UNSIGNED NULL DEFAULT NULL,
-	PRIMARY KEY (`id_book`)
+	PRIMARY KEY (`id`)
 )
-COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 ;
