@@ -1,4 +1,4 @@
-package br.edu.ifsp.app.order;
+package br.edu.ifsp.app.orderBooks;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,55 +18,55 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.Query;
 import org.hibernate.service.ServiceRegistry;
 
-public class OrderRepository {
+public class OrderBooksRepository {
 
 	EntityManager manager = null;
 	EntityManagerFactory factory = null;
 
-	public OrderRepository() {
+	public OrderBooksRepository() {
 		factory = Persistence.createEntityManagerFactory("library");
 		manager = factory.createEntityManager();
 	}
 
-	public List<Order> getOrders() {
-		List<Order> orders = new ArrayList<>();
+	public List<OrderBooks> getOrders() {
+		List<OrderBooks> orderBooks = new ArrayList<>();
 		String query = "SELECT o FROM OrderBooks o WHERE o.id IS NOT NULL";
-		TypedQuery<Order> tq = manager.createQuery(query, Order.class);
+		TypedQuery<OrderBooks> tq = manager.createQuery(query, OrderBooks.class);
 
 		try {
-			orders = tq.getResultList();
+			orderBooks = tq.getResultList();
 		} catch (NoResultException ex) {
 			ex.printStackTrace();
 		}
 
-		return orders;
+		return orderBooks;
 
 	}
 
-	public Order getOrder(long id) {
-		Order order = new Order();
+	public OrderBooks getOrder(long id) {
+		OrderBooks orderBooks = new OrderBooks();
 		String query = "SELECT o FROM OrderBooks o WHERE o.id = :id";
 
-		TypedQuery<Order> typedQuery = manager.createQuery(query, Order.class);
+		TypedQuery<OrderBooks> typedQuery = manager.createQuery(query, OrderBooks.class);
 		typedQuery.setParameter("id", id);
 
 		try {
-			order = typedQuery.getSingleResult();
+			orderBooks = typedQuery.getSingleResult();
 		} catch (NoResultException ex) {
 			ex.printStackTrace();
 		}
 
-		return order;
+		return orderBooks;
 
 	}
 
-	public Order create(Order order) {
+	public OrderBooks create(OrderBooks orderBooks) {
 		EntityTransaction entityTransaction = null;
 
 		try {
 			entityTransaction = manager.getTransaction();
 			entityTransaction.begin();
-			manager.persist(order);
+			manager.persist(orderBooks);
 			entityTransaction.commit();
 			//manager.refresh(order);
 		} catch (Exception ex) {
@@ -78,16 +78,16 @@ public class OrderRepository {
 		}
 		
 		System.out.print(manager);
-		return order;
+		return orderBooks;
 	}
 
-	public Order update(Order order) {
+	public OrderBooks update(OrderBooks orderBooks) {
 		EntityTransaction entityTransaction = null;
 
 		try {
 			entityTransaction = manager.getTransaction();
 			entityTransaction.begin();
-			manager.merge(order);
+			manager.merge(orderBooks);
 			entityTransaction.commit();
 		} catch (Exception ex) {
 			if (entityTransaction != null) {
@@ -96,18 +96,18 @@ public class OrderRepository {
 			ex.printStackTrace();
 		}
 
-		return order;
+		return orderBooks;
 	}
 
 	public Boolean delete(long id) {
-		Order order;
+		OrderBooks orderBooks;
 		EntityTransaction entityTransaction = null;
 
 		try {
 			entityTransaction = manager.getTransaction();
 			entityTransaction.begin();
-			order = manager.find(Order.class, id);
-			manager.remove(order);
+			orderBooks = manager.find(OrderBooks.class, id);
+			manager.remove(orderBooks);
 			entityTransaction.commit();
 		} catch (Exception ex) {
 			// Caso ocorra uma exceção, um rollback das mudanças será executado

@@ -1,4 +1,4 @@
-package br.edu.ifsp.app.order;
+package br.edu.ifsp.app.orderBooks;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,18 +14,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
-@Path("orders")
-public class OrderResource {
+@Path("orders-books")
+public class OrderBooksResource {
 
-	OrderRepository orderRepository = new OrderRepository();
+	OrderBooksRepository orderBooksRepository = new OrderBooksRepository();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/all")
-	public List<Order> getOrders() {
+	public List<OrderBooks> getOrders() {
 		System.out.println("no order/resource/all");
 
-		List<Order> users = orderRepository.getOrders();
+		List<OrderBooks> users = orderBooksRepository.getOrders();
 		return users;
 	}
 	
@@ -33,8 +33,8 @@ public class OrderResource {
 	@Path("/order")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Order createOrder(Order order) {
-		Order createdOrder = orderRepository.create(order);
+	public OrderBooks createOrder(OrderBooks orderBooks) {
+		OrderBooks createdOrder = orderBooksRepository.create(orderBooks);
 		return createdOrder;
 	}
 	
@@ -42,8 +42,8 @@ public class OrderResource {
 	@Path("/order")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Order updateOrder(Order order) {
-		Order updateOrder = orderRepository.update(order);
+	public OrderBooks updateOrder(OrderBooks orderBooks) {
+		OrderBooks updateOrder = orderBooksRepository.update(orderBooks);
 		return updateOrder;
 	}
 	
@@ -51,10 +51,10 @@ public class OrderResource {
 	@Path("/order/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String deleteOrder(@PathParam("id") int id) {
-		Order order = orderRepository.getOrder(id);
+		OrderBooks orderBooks = orderBooksRepository.getOrder(id);
 		
-		if (orderRepository.delete(id)) {
-			return "OrderBooks " + order.getId() + " deleted.";
+		if (orderBooksRepository.delete(id)) {
+			return "OrderBooks " + orderBooks.getId() + " deleted.";
 		} else {
 			return "OrderBooks not found.";		
 		}
