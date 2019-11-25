@@ -17,8 +17,10 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 
 import br.edu.ifsp.app.book.BookRepository;
+import br.edu.ifsp.app.order.Order;
 import br.edu.ifsp.app.order.OrderRepository;
 import br.edu.ifsp.app.orderBooks.OrderBooks;
+import br.edu.ifsp.app.orderBooks.OrderBooksRepository;
 import br.edu.ifsp.app.user.User;
 import br.edu.ifsp.app.book.Book;
 
@@ -61,10 +63,70 @@ public class BuyFacadeResource {
 
 	    	return response;
 	    }
-	    
-	    List<OrderBooks> orderBooks = this.getTotalItemBooks(user.getOrderBooks()); 
 
-	    return gson.toJson(orderBooks);
+	    List<OrderBooks> orderBooks = this.getTotalItemBooks(user.getOrderBooks());
+
+	    Double totalOrder = this.getTotalOrder(orderBooks);
+
+		Order order = new Order();
+    	order.setId_user(user.getId());
+    	order.setTotal(totalOrder);
+
+    	OrderRepository orderRepository = new OrderRepository();
+    	Order orderResponse = orderRepository.create(order);
+
+    	if (orderResponse == null) {
+    		response = "{"
+    	    		+ "\"error\": true,"
+    	    		+ "\"message\": \"Order not created\","
+    	    		+ "\"data\": []}]";
+ 
+    		return response;
+    	}
+
+    	OrderBooksRepository orderBooksRepository = new OrderBooksRepository();
+
+    	List<OrderBooks> orderBooksResponse = orderBooksRepository.createByList(orderBooks, orderResponse.getId());
+
+    	if (orderBooksResponse == null) {
+    		response = "{"
+	    		+ "\"error\": true,"
+	    		+ "\"message\": \"OrderBooks not created\","
+	    		+ "\"data\": []}]";
+
+    		orderRepository.delete(orderResponse.getId());
+    		return response;
+    	}
+    	
+    	List<Book> books = this.getStockBooksUpdated(orderBooksResponse);
+  
+    	BookRepository bookRepository = new BookRepository();
+    	
+    	ListIterator<Book> booksIt = books.listIterator();
+    	while (booksIt.hasNext()) {
+    		bookRepository.update(booksIt.next());
+    	}
+
+    	response = "{"
+    		+ "\"error\": false,"
+    		+ "\"message\": \"Order successfully created\","
+    		+ "\"data\": ["
+    		+ "\"order\": \"" + order.getId() + "\","
+    		+ "\"total\": \"" + order.getTotal() + "\","
+    		+ "\"orderBooks\": {[";
+
+    	ListIterator<OrderBooks> orderBooksIt = orderBooksResponse.listIterator();
+    	while (orderBooksIt.hasNext()) {
+    		OrderBooks orderBook = orderBooksIt.next();
+   		
+    		response += "{\"book\": \"" + orderBook.getId_book() + "\","
+	    		+ "\"quantity\": \"" + orderBook.getQuantity() + "\","
+	    		+ "\"price: \": \"" + orderBook.getPrice() + "\"}";
+    	}
+ 
+    	response += "]}}";
+	
+		return response;
 	}
 
 	private List<Book> checkStocks(List<OrderBooks> orderBooks) {
@@ -74,8 +136,8 @@ public class BuyFacadeResource {
 
 		return books;
 	}
-
-	private List<OrderBooks> getTotalItemBooks(List<OrderBooks> orderBooks) {
+	
+	private List<Book> getBooksByOrderBooks(List<OrderBooks> orderBooks) {
 		BookRepository bookRepository = new BookRepository();
 		ListIterator<OrderBooks> booksIt = orderBooks.listIterator();
 
@@ -90,6 +152,12 @@ public class BuyFacadeResource {
 		}
 
 		List<Book> itemsBooks = bookRepository.getItems(books);
+		
+		return itemsBooks;
+	}
+
+	private List<OrderBooks> getTotalItemBooks(List<OrderBooks> orderBooks) {
+		List<Book> itemsBooks = this.getBooksByOrderBooks(orderBooks);
 
 		ListIterator<Book> itemsBooksIt = itemsBooks.listIterator();
 
@@ -114,5 +182,44 @@ public class BuyFacadeResource {
 		}
 
 		return orderBooksResponse;
+	}
+
+	private Double getTotalOrder(List<OrderBooks> orderBooks) {
+		ListIterator<OrderBooks> booksIt = orderBooks.listIterator();
+		
+		Double total = (double) 0;
+		while (booksIt.hasNext()) {
+			total += booksIt.next().getPrice();
+		}
+		
+		return total;
+	}
+	
+	private List<Book> getStockBooksUpdated(List<OrderBooks> orderBooks) {
+		List<Book> itemsBooks = this.getBooksByOrderBooks(orderBooks);
+
+		ListIterator<Book> itemsBooksIt = itemsBooks.listIterator();
+
+		ListIterator<OrderBooks> orderBooksIt = orderBooks.listIterator();
+
+		List<Book> booksResponse = new ArrayList<Book>();
+		while (itemsBooksIt.hasNext()) {
+			Book book = itemsBooksIt.next();
+
+			while (orderBooksIt.hasNext()) {
+				OrderBooks orderBook = orderBooksIt.next();
+
+				if (book.getId() == orderBook.getId_book()) {
+					int stock = book.getStock() - orderBook.getQuantity();
+
+					book.setStock(stock);
+
+					booksResponse.add(book);
+					break;
+				}
+			}
+		}
+
+		return booksResponse;
 	}
 }

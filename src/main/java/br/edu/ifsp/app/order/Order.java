@@ -25,7 +25,7 @@ public class Order implements Serializable {
 	@Id
 	@SerializedName("order")
 	private long id;
-	private Integer id_user;
+	private long id_user;
 	private Double total;
 	
 	public Order() {}
@@ -38,11 +38,11 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getId_user() {
+	public long getId_user() {
 		return id_user;
 	}
 
-	public void setId_user(Integer id_user) {
+	public void setId_user(long id_user) {
 		this.id_user = id_user;
 	}
 

@@ -3,6 +3,7 @@ package br.edu.ifsp.app.orderBooks;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -57,6 +58,35 @@ public class OrderBooksRepository {
 		}
 
 		return orderBooks;
+	}
+	
+	public List<OrderBooks> createByList(List<OrderBooks> orderBooks, long orderId) {
+		EntityTransaction entityTransaction = null;
+
+		ListIterator<OrderBooks> booksIt = orderBooks.listIterator();
+		
+		List<OrderBooks> orderBooksResponse = new ArrayList<OrderBooks>();
+		while (booksIt.hasNext()) {
+			OrderBooks orderBook = booksIt.next();
+			orderBook.setId_order(orderId);
+
+			try {
+				entityTransaction = manager.getTransaction();
+				entityTransaction.begin();
+				manager.persist(orderBook);
+				entityTransaction.commit();
+
+				orderBooksResponse.add(orderBook);
+			} catch (Exception ex) {
+				// Se ocorrer uma exceção, dê rollback nas mudanças
+				if (entityTransaction != null) {
+					entityTransaction.rollback();
+				}
+				ex.printStackTrace();
+			}
+		}
+
+		return orderBooksResponse;
 	}
 
 	public OrderBooks create(OrderBooks orderBooks) {
