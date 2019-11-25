@@ -113,7 +113,7 @@ public class BuyFacadeResource {
     		+ "\"data\": ["
     		+ "\"order\": \"" + order.getId() + "\","
     		+ "\"total\": \"" + order.getTotal() + "\","
-    		+ "\"orderBooks\": {[";
+    		+ "\"orderBooks\": [";
 
     	ListIterator<OrderBooks> orderBooksIt = orderBooksResponse.listIterator();
     	while (orderBooksIt.hasNext()) {
@@ -124,7 +124,7 @@ public class BuyFacadeResource {
 	    		+ "\"price: \": \"" + orderBook.getPrice() + "\"}";
     	}
  
-    	response += "]}}";
+    	response += "]}";
 	
 		return response;
 	}
