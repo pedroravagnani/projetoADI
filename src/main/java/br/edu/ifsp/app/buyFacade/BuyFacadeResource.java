@@ -61,44 +61,58 @@ public class BuyFacadeResource {
 
 	    	return response;
 	    }
+	    
+	    List<OrderBooks> orderBooks = this.getTotalItemBooks(user.getOrderBooks()); 
 
-	    return "Foi";
+	    return gson.toJson(orderBooks);
 	}
 
-	public List<Book> checkStocks(List<OrderBooks> orderBooks) {
+	private List<Book> checkStocks(List<OrderBooks> orderBooks) {
 		BookRepository bookRepository = new BookRepository();
 		
 		List<Book> books = bookRepository.getOutStock(orderBooks);
 
 		return books;
 	}
-	/*
-	public List<OrderBooks> getTotalItemBooks(List<OrderBooks> orderBooks) {
+
+	private List<OrderBooks> getTotalItemBooks(List<OrderBooks> orderBooks) {
 		BookRepository bookRepository = new BookRepository();
 		ListIterator<OrderBooks> booksIt = orderBooks.listIterator();
 
 		List<Book> books = new ArrayList<Book>();
 		while (booksIt.hasNext()) {
 			Book book = new Book();
+
 			OrderBooks orderB = booksIt.next();
 			book.setId(orderB.getId_book());
+
+			books.add(book);
 		}
 
 		List<Book> itemsBooks = bookRepository.getItems(books);
 
-		ListIterator<Book> totalBooksIt = itemsBooks.listIterator();
+		ListIterator<Book> itemsBooksIt = itemsBooks.listIterator();
 
-		List<OrderBooks> orderBook = new ArrayList<OrderBooks>(); 
-		while(totalBooksIt.hasNext()) {
-			Book book = totalBooksIt.next();
-			OrderBooks orderBookItem = new OrderBooks();
-			
-			orderBookItem.setId_book(book.getId());
-			orderBookItem.
-			
+		ListIterator<OrderBooks> orderBooksIt = orderBooks.listIterator();
+
+		List<OrderBooks> orderBooksResponse = new ArrayList<OrderBooks>();
+		while (orderBooksIt.hasNext()) {
+			OrderBooks orderBook = orderBooksIt.next();
+
+			while (itemsBooksIt.hasNext()) {
+				Book book = itemsBooksIt.next();
+
+				if (book.getId() == orderBook.getId_book()) {
+					Double total = orderBook.getQuantity() * book.getPrice();
+
+					orderBook.setPrice(total);
+
+					orderBooksResponse.add(orderBook);
+					break;
+				}
+			}
 		}
-		
-		return total;
+
+		return orderBooksResponse;
 	}
-	*/
 }

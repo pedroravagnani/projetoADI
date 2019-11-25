@@ -82,7 +82,7 @@ public class BookRepository {
 		while (bookIt.hasNext()) {
 			Book book = bookIt.next();
 			
-			inQuery += book.getId();
+			inQuery += "'" + book.getId() + "'";
 			
 			if (bookIt.hasNext()) {
 				inQuery += ",";
@@ -91,7 +91,7 @@ public class BookRepository {
 
 		List<Book> books = new ArrayList<>();
 		String query = "SELECT b FROM Book b WHERE b.id in(" + inQuery + ")";
-		
+
 		System.out.print(query);
 		TypedQuery<Book> tq = manager.createQuery(query, Book.class);
 
