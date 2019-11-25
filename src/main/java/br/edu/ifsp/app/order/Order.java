@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement
 @Entity
 @Table(name="orders")
@@ -17,9 +19,11 @@ public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+		
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
+	@SerializedName("order")
 	private long id;
 	private Integer id_user;
 	private Double total;

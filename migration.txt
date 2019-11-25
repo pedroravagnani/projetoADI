@@ -1,24 +1,73 @@
-##Create User
-CREATE TABLE `user` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(150) NOT NULL DEFAULT '0',
-	`username` VARCHAR(50) NOT NULL DEFAULT '0',
-	`email` VARCHAR(50) NOT NULL DEFAULT '0',
-	`password` VARCHAR(255) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-;
+-- --------------------------------------------------------
+-- Host:                         localhost
+-- Server version:               10.1.40-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             10.2.0.5599
+-- --------------------------------------------------------
 
-## Create Books
-CREATE TABLE `book` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(100) NULL DEFAULT NULL,
-	`publisher` VARCHAR(100) NULL DEFAULT NULL,
-	`category` VARCHAR(50) NULL DEFAULT NULL,
-	`stock` INT(11) NULL DEFAULT '0',
-	`price` FLOAT(10,2) UNSIGNED NULL DEFAULT NULL,
-	PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for library
+DROP DATABASE IF EXISTS `library`;
+CREATE DATABASE IF NOT EXISTS `library` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `library`;
+
+-- Dumping structure for table library.book
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE IF NOT EXISTS `book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `publisher` varchar(100) DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `stock` int(11) DEFAULT '0',
+  `price` float(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table library.orders
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table library.orders_books
+DROP TABLE IF EXISTS `orders_books`;
+CREATE TABLE IF NOT EXISTS `orders_books` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_order` int(11) DEFAULT NULL,
+  `id_book` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table library.user
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL DEFAULT '0',
+  `username` varchar(50) NOT NULL DEFAULT '0',
+  `email` varchar(50) NOT NULL DEFAULT '0',
+  `password` varchar(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

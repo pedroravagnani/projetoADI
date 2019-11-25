@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.SerializedName;
+
 @XmlRootElement
 @Entity
 @Table(name="orders_books")
@@ -20,6 +22,7 @@ public class OrderBooks implements Serializable {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
+	@SerializedName("orderBooks")
 	private long id;
 	private long id_order;
 	private Integer id_book;
