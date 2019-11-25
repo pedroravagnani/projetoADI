@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.gson.annotations.SerializedName;
@@ -32,6 +34,9 @@ public class User implements Serializable {
 	private String username;
 	private String email;
 	private String password;
+
+	@Transient
+	@ElementCollection(targetClass=OrderBooks.class)
 	private List<OrderBooks> orderBooks;
 
 	public User() {}

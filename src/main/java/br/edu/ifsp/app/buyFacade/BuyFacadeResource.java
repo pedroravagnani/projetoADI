@@ -1,5 +1,9 @@
 package br.edu.ifsp.app.buyFacade;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,8 +16,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
 
+import br.edu.ifsp.app.book.BookRepository;
+import br.edu.ifsp.app.order.OrderRepository;
+import br.edu.ifsp.app.orderBooks.OrderBooks;
 import br.edu.ifsp.app.user.User;
-
+import br.edu.ifsp.app.book.Book;
 
 @Path("purchase")
 public class BuyFacadeResource {
@@ -21,19 +28,77 @@ public class BuyFacadeResource {
 	@Path("/order")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User purchaseOrder(String json) {
+	public String purchaseOrder(String json) {
 		if (null == json) {
 	        return null;
 	    }
 
+		String response = "";
 	    Gson gson = new Gson();
 	    User user = gson.fromJson(json, User.class);
 
-	    return user;
+	    List<Book> noStock = this.checkStocks(user.getOrderBooks());
+
+	    if (noStock.isEmpty() == false) {
+	    	ListIterator<Book> booksIt = noStock.listIterator();
+
+	    	response = "{"
+	    		+ "\"error\": true,"
+	    		+ "\"message\": \"Insuficient stock\","
+	    		+ "\"data\": [";
+
+	    	while(booksIt.hasNext()) {
+	    		Book book = booksIt.next();
+
+	    		response += "{\"id\": \"" + book.getId() + "\",";
+	    		response += "\"name\": \"" + book.getName() + "\",";
+	    		response += "\"stock\": \"" + book.getStock() + "\",";
+	    		response += "\"category\": \"" + book.getCategory() + "\",";
+	    		response += "\"price\": \"" + book.getPrice() + "\"}";
+	    	}
+
+	    	response += "]}]";
+
+	    	return response;
+	    }
+
+	    return "Foi";
 	}
 
-	public Object checkStoks(Object bookItems) {
+	public List<Book> checkStocks(List<OrderBooks> orderBooks) {
+		BookRepository bookRepository = new BookRepository();
 		
-		return bookItems;
+		List<Book> books = bookRepository.getOutStock(orderBooks);
+
+		return books;
 	}
+	/*
+	public List<OrderBooks> getTotalItemBooks(List<OrderBooks> orderBooks) {
+		BookRepository bookRepository = new BookRepository();
+		ListIterator<OrderBooks> booksIt = orderBooks.listIterator();
+
+		List<Book> books = new ArrayList<Book>();
+		while (booksIt.hasNext()) {
+			Book book = new Book();
+			OrderBooks orderB = booksIt.next();
+			book.setId(orderB.getId_book());
+		}
+
+		List<Book> itemsBooks = bookRepository.getItems(books);
+
+		ListIterator<Book> totalBooksIt = itemsBooks.listIterator();
+
+		List<OrderBooks> orderBook = new ArrayList<OrderBooks>(); 
+		while(totalBooksIt.hasNext()) {
+			Book book = totalBooksIt.next();
+			OrderBooks orderBookItem = new OrderBooks();
+			
+			orderBookItem.setId_book(book.getId());
+			orderBookItem.
+			
+		}
+		
+		return total;
+	}
+	*/
 }

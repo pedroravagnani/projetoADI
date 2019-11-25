@@ -25,7 +25,7 @@ public class OrderBooks implements Serializable {
 	@SerializedName("orderBooks")
 	private long id;
 	private long id_order;
-	private Integer id_book;
+	private long id_book;
 	private Integer quantity;
 	private Double price;
 	
@@ -47,11 +47,11 @@ public class OrderBooks implements Serializable {
 		this.id_order = id_order;
 	}
 
-	public Integer getId_book() {
+	public long getId_book() {
 		return id_book;
 	}
 
-	public void setId_book(Integer id_book) {
+	public void setId_book(long id_book) {
 		this.id_book = id_book;
 	}
 
