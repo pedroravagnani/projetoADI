@@ -10,6 +10,7 @@
         <class>br.edu.ifsp.app.book.Book</class>
         <class>br.edu.ifsp.app.order.Order</class>
         <class>br.edu.ifsp.app.orderBooks.OrderBooks</class>
+        <class>br.edu.ifsp.app.book.EBook</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />

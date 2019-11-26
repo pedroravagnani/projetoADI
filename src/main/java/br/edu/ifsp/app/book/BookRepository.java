@@ -121,7 +121,7 @@ public class BookRepository {
 
 	}
 
-	public Book create(Book book) {
+	public BaseBook create(BaseBook book) {
 		EntityTransaction entityTransaction = null;
 
 		try {

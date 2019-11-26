@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @Table(name="book")
-public class Book implements BaseBook {	
+public class EBook implements BaseBook {	
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,8 +26,9 @@ public class Book implements BaseBook {
 	private String category;
 	private Integer stock;	
 	private Double price;
+	private String downloadLink;
 	
-	public Book() {}
+	public EBook() {}
 
 	public long getId() {
 		return id;
@@ -79,13 +80,13 @@ public class Book implements BaseBook {
 
 	@Override
 	public String getDownladLink() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return downloadLink;
 	}
 
 	@Override
 	public void setDownloadLink(String downloadLink) {
-		// TODO Auto-generated method stub
+		this.downloadLink = downloadLink;
 		
 	}
 	
