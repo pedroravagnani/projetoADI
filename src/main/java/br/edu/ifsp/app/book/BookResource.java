@@ -47,15 +47,13 @@ public class BookResource {
 		
 		if(book.contains("downloadLink")) {
 			System.out.println("Ebook!");
-			String json = gson.toJson(book, BaseBook.class);
-			EBook json1 = gson.fromJson(json, EBook.class);
+			EBook json1 = gson.fromJson(book, EBook.class);
 			BaseBook createdBook = bookRepository.create(json1);
 			return createdBook;
 		}
 		else {
 			System.out.println("Book!");
-			String json = gson.toJson(book, BaseBook.class);
-			Book json1 = gson.fromJson(json, Book.class);
+			Book json1 = gson.fromJson(book, Book.class);
 			BaseBook createdBook = bookRepository.create(json1);
 			return createdBook;
 		}
