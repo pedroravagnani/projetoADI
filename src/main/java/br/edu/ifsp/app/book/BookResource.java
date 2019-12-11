@@ -41,7 +41,6 @@ public class BookResource {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(BaseBook.class, new InterfaceAdapter());
 		Gson gson = builder.create();
-
 		
 		System.out.println("criando book");
 		
@@ -53,7 +52,13 @@ public class BookResource {
 		}
 		else {
 			System.out.println("Book!");
+<<<<<<< HEAD
 			Book json1 = gson.fromJson(book, Book.class);
+=======
+			System.out.println(gson.toJson(book, BaseBook.class));
+			Book json1 = gson.fromJson(book, Book.class);
+			//System.out.println(gson.toJson(json1, Book.class));
+>>>>>>> dev
 			BaseBook createdBook = bookRepository.create(json1);
 			return createdBook;
 		}
@@ -68,7 +73,7 @@ public class BookResource {
 		
 		//BaseBook createdBook = null;
 	}
-	
+
 	@PUT
 	@Path("/book")
 	@Consumes(MediaType.APPLICATION_JSON)
