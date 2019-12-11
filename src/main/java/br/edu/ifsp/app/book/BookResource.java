@@ -41,21 +41,20 @@ public class BookResource {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(BaseBook.class, new InterfaceAdapter());
 		Gson gson = builder.create();
-
 		
 		System.out.println("criando book");
 		
 		if(book.contains("downloadLink")) {
 			System.out.println("Ebook!");
-			String json = gson.toJson(book, BaseBook.class);
-			EBook json1 = gson.fromJson(json, EBook.class);
+			EBook json1 = gson.fromJson(book, EBook.class);
 			BaseBook createdBook = bookRepository.create(json1);
 			return createdBook;
 		}
 		else {
 			System.out.println("Book!");
-			String json = gson.toJson(book, BaseBook.class);
-			Book json1 = gson.fromJson(json, Book.class);
+			System.out.println(gson.toJson(book, BaseBook.class));
+			Book json1 = gson.fromJson(book, Book.class);
+			//System.out.println(gson.toJson(json1, Book.class));
 			BaseBook createdBook = bookRepository.create(json1);
 			return createdBook;
 		}
@@ -70,7 +69,7 @@ public class BookResource {
 		
 		//BaseBook createdBook = null;
 	}
-	
+
 	@PUT
 	@Path("/book")
 	@Consumes(MediaType.APPLICATION_JSON)
